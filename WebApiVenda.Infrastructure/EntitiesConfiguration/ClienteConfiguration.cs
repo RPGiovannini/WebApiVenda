@@ -9,14 +9,12 @@ using WebApiVenda.Domain.Entities;
 
 namespace WebApiVenda.Infrastructure.EntitiesConfiguration
 {
-    public class ProdutoConfiguration : IEntityTypeConfiguration<Produto>
+    public class ClienteConfiguration : IEntityTypeConfiguration<Cliente>
     {
-        public void Configure(EntityTypeBuilder<Produto> builder)
+        public void Configure(EntityTypeBuilder<Cliente> builder)
         {
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Descricao).IsRequired().HasMaxLength(250);
-            builder.Property(x => x.Preco).IsRequired();
-            builder.Property(x => x.Estoque).IsRequired();
+            builder.Property(x => x.Nome).IsRequired().HasMaxLength(250);
             builder.Property(x => x.DataCadastro).IsRequired();
             builder.Property(x => x.Ativo).IsRequired();
         }

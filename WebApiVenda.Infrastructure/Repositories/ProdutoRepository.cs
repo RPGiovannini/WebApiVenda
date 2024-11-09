@@ -25,7 +25,7 @@ namespace WebApiVenda.Infrastructure.Repositories
             return produto;
         }
 
-        public async Task<Produto> Delete(Produto produto)
+        public async Task<Produto> DeleteAsync(Produto produto)
         {
             produto.Ativo = false;
             _context.Update(produto);
@@ -35,12 +35,12 @@ namespace WebApiVenda.Infrastructure.Repositories
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
-            return await _context.Produtos.AsNoTracking().ToListAsync();
+            return await _context.Produtos.AsNoTracking().Where(x=>x.Ativo).ToListAsync();
         }
 
         public async Task<Produto?> GetByIdAsync(long? id)
         {
-            return await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Produtos.AsNoTracking().Where(x => x.Ativo).FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<Produto> UpdateAsync(Produto produto)
         {

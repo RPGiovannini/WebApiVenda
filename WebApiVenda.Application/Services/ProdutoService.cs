@@ -33,7 +33,7 @@ namespace WebApiVenda.Application.Services
 
         public async Task Delete(ProdutoDTO produtoDTO)
         {
-            await _produtoRepository.Delete(ReturnMappingDTOToEntity(produtoDTO));
+            await _produtoRepository.DeleteAsync(ReturnMappingDTOToEntity(produtoDTO));
         }
 
         public async Task<IEnumerable<ProdutoDTO>> GetAll()

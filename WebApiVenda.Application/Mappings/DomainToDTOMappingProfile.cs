@@ -14,6 +14,8 @@ namespace WebApiVenda.Application.Mappings
         public DomainToDTOMappingProfile() 
         {
             CreateMap<Produto,ProdutoDTO>().ReverseMap();
+            CreateMap<Cliente,ClienteDTO>().ReverseMap();
+            CreateMap<Venda,VendaDTO>().ReverseMap();
         }
     }
 }
