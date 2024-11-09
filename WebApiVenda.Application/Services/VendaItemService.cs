@@ -14,21 +14,25 @@ namespace WebApiVenda.Application.Services
     public class VendaItemService : IVendaItemService
     {
         private IVendaItemRepository _vendaItemRepository;
+        private IVendaRepository _vendaRepository;
         private readonly IMapper _mapper;
 
-        public VendaItemService(IMapper mapper, IVendaItemRepository vendaItemRepository)
+        public VendaItemService(IMapper mapper, IVendaItemRepository vendaItemRepository, IVendaRepository vendaRepository)
         {
             _vendaItemRepository = vendaItemRepository ?? throw new ArgumentNullException(nameof(vendaItemRepository));
             _mapper = mapper;
+            _vendaRepository = vendaRepository;
         }
         public async Task Add(VendaItemDTO vendaItemDTO)
         {
             await _vendaItemRepository.CreateAsync(_mapper.Map<VendaItem>(vendaItemDTO));
+            await UpdateVenda(vendaItemDTO, false);
         }
 
         public async Task Cancel(VendaItemDTO vendaItemDTO)
         {
             await _vendaItemRepository.CancelAsync(_mapper.Map<VendaItem>(vendaItemDTO));
+            await UpdateVenda(vendaItemDTO, true);
         }
 
         public async Task<IEnumerable<VendaItemDTO>> GetAll()
@@ -45,7 +49,21 @@ namespace WebApiVenda.Application.Services
 
         public async Task Update(VendaItemDTO vendaItemDTO)
         {
-          await _vendaItemRepository.UpdateAsync(_mapper.Map<VendaItem>(vendaItemDTO));
+            await _vendaItemRepository.UpdateAsync(_mapper.Map<VendaItem>(vendaItemDTO));
+        }
+        private async Task UpdateVenda(VendaItemDTO vendaItemDTO, bool cancelamentoItem)
+        {
+            var venda = await _vendaRepository.GetIdAsync(vendaItemDTO.IdVenda);
+            if (!cancelamentoItem)
+            {
+                venda.ValorVenda += vendaItemDTO.Quantidade * vendaItemDTO.PrecoUnitario;
+            }
+            else 
+            {
+                venda.ValorVenda -= vendaItemDTO.Quantidade * vendaItemDTO.PrecoUnitario;
+
+            }
+            await _vendaRepository.UpdateAsync(venda);
         }
     }
 }
