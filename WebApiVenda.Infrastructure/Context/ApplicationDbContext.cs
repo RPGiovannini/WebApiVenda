@@ -10,7 +10,7 @@ namespace WebApiVenda.Infrastructure.Context
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<DbContext> options) : base(options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
         { }
         public DbSet<Produto> Produtos { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)

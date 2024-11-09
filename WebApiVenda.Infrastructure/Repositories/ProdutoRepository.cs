@@ -35,12 +35,12 @@ namespace WebApiVenda.Infrastructure.Repositories
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
-            return await _context.Produtos.ToListAsync();
+            return await _context.Produtos.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Produto> GetByIdAsync(long? id)
+        public async Task<Produto?> GetByIdAsync(long? id)
         {
-            return await _context.Produtos.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Produtos.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task<Produto> UpdateAsync(Produto produto)
         {

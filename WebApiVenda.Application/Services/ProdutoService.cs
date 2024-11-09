@@ -25,6 +25,7 @@ namespace WebApiVenda.Application.Services
         {
             return _mapper.Map<Produto>(produtoDTO);
         }
+
         public async Task Add(ProdutoDTO produtoDTO)
         {
             await _produtoRepository.CreateAsync(ReturnMappingDTOToEntity(produtoDTO));

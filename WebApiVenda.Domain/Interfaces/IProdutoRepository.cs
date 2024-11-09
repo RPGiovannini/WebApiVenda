@@ -10,7 +10,7 @@ namespace WebApiVenda.Domain.Interfaces
     public interface IProdutoRepository
     {
         Task<IEnumerable<Produto>> GetAllAsync();
-        Task<Produto> GetByIdAsync(long? id);
+        Task<Produto?> GetByIdAsync(long? id);
         Task<Produto> CreateAsync(Produto produto);
         Task<Produto> UpdateAsync(Produto produto);
         Task<Produto> Delete(Produto produto);

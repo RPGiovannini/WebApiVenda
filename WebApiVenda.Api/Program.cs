@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
 using WebApiVenda.CrossCutting.IoC;
+using WebApiVenda.Infrastructure.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 

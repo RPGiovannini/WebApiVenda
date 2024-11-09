@@ -7,7 +7,12 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using WebApiVenda.Application.Interfaces;
+using WebApiVenda.Application.Mappings;
+using WebApiVenda.Application.Services;
+using WebApiVenda.Domain.Interfaces;
 using WebApiVenda.Infrastructure.Context;
+using WebApiVenda.Infrastructure.Repositories;
 
 namespace WebApiVenda.CrossCutting.IoC
 {
@@ -18,6 +23,13 @@ namespace WebApiVenda.CrossCutting.IoC
             var postgresConnection = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
                                               options.UseNpgsql(postgresConnection));
+
+            services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
+
+            services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
+
+
             return services;
         }
     }
