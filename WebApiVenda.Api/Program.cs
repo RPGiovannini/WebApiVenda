@@ -1,11 +1,12 @@
 using Microsoft.OpenApi.Models;
 using System.Text.Json.Serialization;
+using WebApiVenda.CrossCutting.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 builder.Services.AddControllers();
-builder.Services.AddInfrastructureAPI(builder.Configuration);
+builder.Services.InfrastructureApi(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
