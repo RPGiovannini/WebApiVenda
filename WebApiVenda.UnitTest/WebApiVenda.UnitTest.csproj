@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\WebApiVenda.Application\WebApiVenda.Application.csproj" />
+    <ProjectReference Include="..\WebApiVenda.Domain\WebApiVenda.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
