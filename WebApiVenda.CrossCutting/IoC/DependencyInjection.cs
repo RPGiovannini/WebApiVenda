@@ -28,6 +28,8 @@ namespace WebApiVenda.CrossCutting.IoC
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IClienteService, ClienteService>();
+            services.AddScoped<IVendaRepository, VendaRepository>();
+            services.AddScoped<IVendaService, VendaService>();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 

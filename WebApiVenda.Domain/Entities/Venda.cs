@@ -12,10 +12,8 @@ namespace WebApiVenda.Domain.Entities
     {
         public Venda(long idCliente, DateTime dataVenda, decimal valorVenda)
         {
-            Status = (int)EVendaStatus.Aberta;
             ValidateDomain(idCliente, dataVenda, valorVenda);
         }
-
         public DateTime DataVenda { get; set; }
         public decimal ValorVenda { get; set; }
         public int Status { get; set; }

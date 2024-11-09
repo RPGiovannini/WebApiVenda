@@ -56,9 +56,9 @@ namespace WebApiVenda.Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(long id, [FromBody] VendaDTO vendaDTO)
         {
-            if (!ModelState.IsValid)
+            if (id != vendaDTO.Id)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
             await _vendaService.Update(vendaDTO);
             return Ok(vendaDTO);

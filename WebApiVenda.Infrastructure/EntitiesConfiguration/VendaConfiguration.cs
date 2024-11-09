@@ -24,7 +24,7 @@ namespace WebApiVenda.Infrastructure.Configurations
                 .IsRequired();
 
             builder.HasOne(v => v.Cliente)
-                .WithMany(v=>v.Vendas)
+                .WithMany(c => c.Vendas)
                 .HasForeignKey(v => v.IdCliente);
         }
     }

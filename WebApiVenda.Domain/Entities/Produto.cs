@@ -24,7 +24,6 @@ namespace WebApiVenda.Domain.Entities
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(descricao) || descricao.Length<3, "Descricao invalida");
             DomainExceptionValidation.When(preco < 0, "Preço invalido");
             DomainExceptionValidation.When(estoque < 0, "Estoque invalido");
-            DomainExceptionValidation.When(dataCadastro < DateTime.Now, "Data de cadastro invalida");
 
             Descricao = descricao;
             Preco = preco;

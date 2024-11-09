@@ -16,14 +16,15 @@ namespace WebApiVenda.Domain.Entities
         public string Nome { get; set; }
         public bool Ativo { get; set; }
         public DateTime DataCadastro { get; set; }
+
+        public ICollection<Venda> Vendas { get; set; }
         private void ValidateDomain(string nome, DateTime dataCadastro) 
         {
             DomainExceptionValidation.When(string.IsNullOrEmpty(nome), "Descricao invalida");
-            DomainExceptionValidation.When(dataCadastro < DateTime.Now, "Data de cadastro invalida");
 
             Nome = nome;
             DataCadastro = dataCadastro;
         }
-        public ICollection<Venda> Vendas { get; set; }
+
     }
 }
