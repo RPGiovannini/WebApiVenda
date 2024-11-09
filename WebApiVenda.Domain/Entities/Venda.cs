@@ -22,7 +22,6 @@ namespace WebApiVenda.Domain.Entities
         private void ValidateDomain(long idCliente, DateTime dataVenda, decimal valorVenda)
         {
             DomainExceptionValidation.When(idCliente < 0, "Id do cliente invalido");
-            DomainExceptionValidation.When(dataVenda < DateTime.Now, "Data de venda invalida");
             DomainExceptionValidation.When(valorVenda < 0, "Valor da venda invalido");
 
             IdCliente = idCliente;
@@ -31,6 +30,7 @@ namespace WebApiVenda.Domain.Entities
         }
         public long IdCliente { get; set; }
         public Cliente Cliente { get; set; }
+        public ICollection<VendaItem> VendaItems { get; set; }
 
     }
 }

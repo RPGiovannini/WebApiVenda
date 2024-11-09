@@ -11,11 +11,12 @@ namespace WebApiVenda.Application.Mappings
 {
     public class DomainToDTOMappingProfile : Profile
     {
-        public DomainToDTOMappingProfile() 
+        public DomainToDTOMappingProfile()
         {
-            CreateMap<Produto,ProdutoDTO>().ReverseMap();
-            CreateMap<Cliente,ClienteDTO>().ReverseMap();
-            CreateMap<Venda,VendaDTO>().ReverseMap();
+            CreateMap<Produto, ProdutoDTO>().ReverseMap();
+            CreateMap<Cliente, ClienteDTO>().ReverseMap();
+            CreateMap<Venda, VendaDTO>().ReverseMap();
+            CreateMap<VendaItem, VendaItemDTO>().ReverseMap();
         }
     }
 }

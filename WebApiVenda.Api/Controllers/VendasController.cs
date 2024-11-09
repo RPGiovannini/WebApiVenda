@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using WebApiVenda.Application.DTOs;
 using WebApiVenda.Application.Interfaces;
 

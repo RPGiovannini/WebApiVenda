@@ -19,6 +19,7 @@ namespace WebApiVenda.Domain.Entities
         public decimal Estoque { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public bool Ativo { get; set; }
+        public ICollection<VendaItem> VendaItems { get; set; }
         private void ValidateDomain(string descricao, decimal preco, decimal estoque, DateTime dataCadastro)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(descricao) || descricao.Length<3, "Descricao invalida");
@@ -31,7 +32,7 @@ namespace WebApiVenda.Domain.Entities
             DataCadastro = dataCadastro;
 
         }
-
+    
 
     }
 }
