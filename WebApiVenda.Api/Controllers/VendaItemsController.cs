@@ -5,8 +5,7 @@ using WebApiVenda.Application.Interfaces;
 namespace WebApiVenda.Api.Controllers
 {
     [Route("api/v1/[Controller]")]
-    [ApiController]
-    public class VendaItemsController : Controller
+    public class VendaItemsController : ApiControllerBase
     {
         private readonly IVendaItemService _vendaItemService;
         public VendaItemsController(IVendaItemService vendaItemService)
@@ -40,7 +39,7 @@ namespace WebApiVenda.Api.Controllers
 
             return new CreatedAtRouteResult("GetVendaItem", new { id = vendaItemDTO.Id }, vendaItemDTO);
         }
-        [HttpDelete("{id}")]
+        [HttpPost("{id} (Cancelar)")]
         public async Task<ActionResult<VendaItemDTO>> Cancel(int id)
         {
             var vendaItemDto = await _vendaItemService.GetId(id);

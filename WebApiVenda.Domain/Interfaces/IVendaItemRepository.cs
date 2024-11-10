@@ -14,5 +14,6 @@ namespace WebApiVenda.Domain.Interfaces
         public Task CreateAsync(VendaItem vendaItem);
         public Task UpdateAsync(VendaItem vendaItem);
         public Task CancelAsync(VendaItem vendaItem);
+        public Task<IEnumerable<VendaItem>> GetByVendaAsync(long? idVenda);
     }
 }

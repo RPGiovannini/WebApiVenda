@@ -13,18 +13,18 @@ namespace WebApiVenda.Domain.Entities
         {
             ValidateDomain(descricao, preco, estoque, dataCadastro);
         }
-
-        public string Descricao { get; private set; }
-        public decimal Preco { get; private set; }
-        public decimal Estoque { get; private set; }
-        public DateTime DataCadastro { get; private set; }
-        public bool Ativo { get; set; }
+        public Produto() 
+        {
+        }
+        public string Descricao { get;  set; }
+        public decimal Preco { get;  set; }
+        public decimal Estoque { get;  set; }
+        public DateTime DataCadastro { get;  set; }
         public ICollection<VendaItem> VendaItems { get; set; }
         private void ValidateDomain(string descricao, decimal preco, decimal estoque, DateTime dataCadastro)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(descricao) || descricao.Length<3, "Descricao invalida");
             DomainExceptionValidation.When(preco < 0, "Preço invalido");
-            DomainExceptionValidation.When(estoque < 0, "Estoque invalido");
 
             Descricao = descricao;
             Preco = preco;

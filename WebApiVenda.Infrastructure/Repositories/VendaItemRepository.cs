@@ -35,7 +35,7 @@ namespace WebApiVenda.Infrastructure.Repositories
             return await _context.VendaItems.AsNoTracking().ToListAsync();
         }
 
-        public async  Task<VendaItem> GetIdAsync(long? id)
+        public async Task<VendaItem> GetIdAsync(long? id)
         {
            return await _context.VendaItems.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -44,6 +44,10 @@ namespace WebApiVenda.Infrastructure.Repositories
         {
             _context.Update(vendaItem);
             return _context.SaveChangesAsync();
+        }
+        public async Task<IEnumerable<VendaItem>> GetByVendaAsync(long? idVenda)
+        {
+            return await _context.VendaItems.AsNoTracking().Where(x => x.IdVenda == idVenda).ToListAsync();
         }
     }
 }

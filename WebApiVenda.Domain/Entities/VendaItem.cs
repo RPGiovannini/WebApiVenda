@@ -20,8 +20,6 @@ namespace WebApiVenda.Domain.Entities
         public int IdFinalizadora { get; private set; }
         public decimal PrecoUnitario { get; private set; }
         public DateTime DataCadastro { get; set; }
-        public bool Ativo { get; set; }
-
         private void ValidateDomain(long idVenda, long idProduto, decimal quantidade, int idFinalizadora, decimal precoUnitario)
         {
             DomainExceptionValidation.When(idVenda < 0, "Id da venda invalido");

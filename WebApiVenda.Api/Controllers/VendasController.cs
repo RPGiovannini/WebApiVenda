@@ -5,8 +5,7 @@ using WebApiVenda.Application.Interfaces;
 namespace WebApiVenda.Api.Controllers
 {
     [Route("api/v1/[Controller]")]
-    [ApiController]
-    public class VendasController : Controller
+    public class VendasController : ApiControllerBase
     {
         private readonly IVendaService _vendaService;
         public VendasController(IVendaService vendaService)
@@ -61,14 +60,10 @@ namespace WebApiVenda.Api.Controllers
             await _vendaService.Update(vendaDTO);
             return Ok(vendaDTO);
         }
-        [HttpPut("{id} Finalizar")]
-        public async Task<ActionResult> FinalizeSale(long id, [FromBody] long idBody) 
+        [HttpPut("Finalizar")]
+        public async Task<ActionResult> FinalizeSale(long id) 
         {
-            if(id != idBody) 
-            {
-                return BadRequest();
-            }
-            var venda = await _vendaService.GetId(idBody);
+            var venda = await _vendaService.GetId(id);
             if (venda == null)
             {
                 return NotFound("Venda não encontrada.");

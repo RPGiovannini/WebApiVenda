@@ -14,7 +14,6 @@ namespace WebApiVenda.Domain.Entities
             ValidateDomain(nome, dataCadastro);
         }
         public string Nome { get; set; }
-        public bool Ativo { get; set; }
         public DateTime DataCadastro { get; set; }
 
         public ICollection<Venda> Vendas { get; set; }

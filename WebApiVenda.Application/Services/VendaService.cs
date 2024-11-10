@@ -16,11 +16,14 @@ namespace WebApiVenda.Application.Services
     {
         private IVendaRepository _vendaRepository;
         private readonly IMapper _mapper;
-
-        public VendaService(IMapper mapper, IVendaRepository vendaRepository)
+        private IProdutoRepository _produtoRepository;
+        private IVendaItemRepository _vendaItemRepository;
+        public VendaService(IMapper mapper, IVendaRepository vendaRepository, IProdutoRepository produtoRepository, IVendaItemRepository vendaItemRepository)
         {
             _vendaRepository = vendaRepository ?? throw new ArgumentNullException(nameof(vendaRepository));
             _mapper = mapper;
+            _produtoRepository = produtoRepository ?? throw new ArgumentNullException(nameof(produtoRepository));
+            _vendaItemRepository = vendaItemRepository ?? throw new ArgumentNullException(nameof(vendaItemRepository));
         }
         public Venda ReturnMappingDTOToEntity(VendaDTO vendaDTO)
         {
@@ -44,18 +47,25 @@ namespace WebApiVenda.Application.Services
 
         public async Task<VendaDTO> GetId(long? id)
         {
-           var vendaEntity = await _vendaRepository.GetIdAsync(id);
+            var vendaEntity = await _vendaRepository.GetIdAsync(id);
             return _mapper.Map<VendaDTO>(vendaEntity);
         }
 
         public async Task Update(VendaDTO vendaDTO)
         {
-          await _vendaRepository.UpdateAsync(ReturnMappingDTOToEntity(vendaDTO));
+            await _vendaRepository.UpdateAsync(ReturnMappingDTOToEntity(vendaDTO));
         }
         public async Task FinalizeSale(VendaDTO vendaDTO)
         {
             vendaDTO.Status = (int)EVendaStatus.Fechada;
             await _vendaRepository.UpdateAsync(ReturnMappingDTOToEntity(vendaDTO));
+            var produtos = await _produtoRepository.GetByVenda(vendaDTO.Id);
+            var items = await _vendaItemRepository.GetByVendaAsync(vendaDTO.Id);
+            foreach (var produto in produtos)
+            {
+                produto.Estoque -= items.Where(x=>x.IdProduto == produto.Id).Sum(x=>x.Quantidade);
+                await _produtoRepository.UpdateAsync(produto);
+            }
         }
     }
 }

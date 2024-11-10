@@ -35,7 +35,7 @@ namespace WebApiVenda.Infrastructure.Repositories
 
         public async Task<IEnumerable<Produto>> GetAllAsync()
         {
-            return await _context.Produtos.AsNoTracking().Where(x=>x.Ativo).ToListAsync();
+            return await _context.Produtos.AsNoTracking().Where(x => x.Ativo).ToListAsync();
         }
 
         public async Task<Produto?> GetByIdAsync(long? id)
@@ -47,6 +47,12 @@ namespace WebApiVenda.Infrastructure.Repositories
             _context.Update(produto);
             await _context.SaveChangesAsync();
             return produto;
+        }
+        public async Task<IEnumerable<Produto>> GetByVenda(long idVenda)
+        {
+            var produtosId = _context.VendaItems.Where(x => x.IdVenda == idVenda).Select(x => x.IdProduto).ToList();
+            var produtosVenda = await _context.Produtos.AsNoTracking().Where(x => produtosId.Contains(x.Id)).ToListAsync();
+            return produtosVenda;
         }
     }
 }

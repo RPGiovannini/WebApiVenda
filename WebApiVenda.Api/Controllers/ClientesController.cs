@@ -5,8 +5,7 @@ using WebApiVenda.Application.Interfaces;
 namespace WebApiVenda.Api.Controllers
 {
     [Route("api/v1/[Controller]")]
-    [ApiController]
-    public class ClientesController : Controller
+    public class ClientesController : ApiControllerBase
     {
         private readonly IClienteService _clienteService;
 

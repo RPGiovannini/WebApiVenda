@@ -15,22 +15,29 @@ namespace WebApiVenda.Application.Services
     {
         private IVendaItemRepository _vendaItemRepository;
         private IVendaRepository _vendaRepository;
+        private IProdutoRepository _produtoRepository;
         private readonly IMapper _mapper;
 
-        public VendaItemService(IMapper mapper, IVendaItemRepository vendaItemRepository, IVendaRepository vendaRepository)
+        public VendaItemService(IMapper mapper, IVendaItemRepository vendaItemRepository, IVendaRepository vendaRepository, IProdutoRepository produtoRepository)
         {
             _vendaItemRepository = vendaItemRepository ?? throw new ArgumentNullException(nameof(vendaItemRepository));
             _mapper = mapper;
             _vendaRepository = vendaRepository;
+            _produtoRepository = produtoRepository;
         }
         public async Task Add(VendaItemDTO vendaItemDTO)
         {
+
+            var produto = await _produtoRepository.GetByIdAsync(vendaItemDTO.IdProduto);
+            vendaItemDTO.PrecoUnitario = produto != null ? produto.Preco : 0;
+
             await _vendaItemRepository.CreateAsync(_mapper.Map<VendaItem>(vendaItemDTO));
             await UpdateVenda(vendaItemDTO, false);
         }
 
         public async Task Cancel(VendaItemDTO vendaItemDTO)
         {
+            // volta estoque
             await _vendaItemRepository.CancelAsync(_mapper.Map<VendaItem>(vendaItemDTO));
             await UpdateVenda(vendaItemDTO, true);
         }

@@ -18,7 +18,7 @@ namespace WebApiVenda.CrossCutting.IoC
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection InfrastructureApi(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection InfrastructureApi(this IServiceCollection services, IConfiguration configuration)
         {
             var postgresConnection = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -32,6 +32,9 @@ namespace WebApiVenda.CrossCutting.IoC
             services.AddScoped<IVendaService, VendaService>();
             services.AddScoped<IVendaItemRepository, VendaItemRepository>();
             services.AddScoped<IVendaItemService, VendaItemService>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAuthService,AuthService>();
 
             services.AddAutoMapper(typeof(DomainToDTOMappingProfile));
 

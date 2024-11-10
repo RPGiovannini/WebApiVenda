@@ -17,6 +17,7 @@ namespace WebApiVenda.Application.Mappings
             CreateMap<Cliente, ClienteDTO>().ReverseMap();
             CreateMap<Venda, VendaDTO>().ReverseMap();
             CreateMap<VendaItem, VendaItemDTO>().ReverseMap();
+            CreateMap<Usuario, UsuarioDTO>().ReverseMap();
         }
     }
 }

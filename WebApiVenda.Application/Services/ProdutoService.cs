@@ -28,7 +28,8 @@ namespace WebApiVenda.Application.Services
 
         public async Task Add(ProdutoDTO produtoDTO)
         {
-            await _produtoRepository.CreateAsync(ReturnMappingDTOToEntity(produtoDTO));
+            Produto produto = new Produto(produtoDTO.Descricao, produtoDTO.Preco, produtoDTO.Estoque, produtoDTO.DataCadastro);
+            await _produtoRepository.CreateAsync(produto);
         }
 
         public async Task Delete(ProdutoDTO produtoDTO)
@@ -51,6 +52,11 @@ namespace WebApiVenda.Application.Services
         public async Task Update(ProdutoDTO produtoDTO)
         {
             await _produtoRepository.UpdateAsync(ReturnMappingDTOToEntity(produtoDTO));
+        }
+        public async Task<IEnumerable<ProdutoDTO>> GetByVenda(long idVenda)
+        {
+            var produtoEntity = await _produtoRepository.GetByVenda(idVenda);
+            return _mapper.Map<IEnumerable<ProdutoDTO>>(produtoEntity);
         }
     }
 }
