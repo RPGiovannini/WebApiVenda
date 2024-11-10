@@ -22,19 +22,18 @@ namespace WebApiVenda.Application.Services
             _mapper = mapper;
         }
 
-        public Cliente ReturnMappingDTOToEntity(ClienteDTO clienteDTO)
-        {
-            return _mapper.Map<Cliente>(clienteDTO);
-        }
+    
 
         public async Task Add(ClienteDTO clienteDTO)
         {
-            await _clienteRepository.CreateAsync(ReturnMappingDTOToEntity(clienteDTO));
+            var cliente = new Cliente(clienteDTO.Id, clienteDTO.Nome, clienteDTO.DataCadastro);
+            await _clienteRepository.CreateAsync(cliente);
         }
 
         public async Task Delete(ClienteDTO clienteDTO)
         {
-            await _clienteRepository.DeleteAsync(ReturnMappingDTOToEntity(clienteDTO));
+            var cliente = new Cliente(clienteDTO.Id, clienteDTO.Nome, clienteDTO.DataCadastro);
+            await _clienteRepository.DeleteAsync(cliente);
         }
 
         public async Task<IEnumerable<ClienteDTO>> GetAll()
@@ -51,7 +50,8 @@ namespace WebApiVenda.Application.Services
 
         public async Task Update(ClienteDTO clienteDTO)
         {
-            await _clienteRepository.UpdateAsync(ReturnMappingDTOToEntity(clienteDTO));
+            var cliente = new Cliente(clienteDTO.Id, clienteDTO.Nome, clienteDTO.DataCadastro);
+            await _clienteRepository.UpdateAsync(cliente);
         }
     }
 }

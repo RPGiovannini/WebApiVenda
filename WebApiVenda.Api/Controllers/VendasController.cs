@@ -39,7 +39,7 @@ namespace WebApiVenda.Api.Controllers
 
             return new CreatedAtRouteResult("GetVenda", new { id = vendaDTO.Id }, vendaDTO);
         }
-        [HttpDelete("{id}")]
+        [HttpPut("Cancelar")]
         public async Task<ActionResult<VendaDTO>> Cancel(int id)
         {
             var vendaDto = await _vendaService.GetId(id);

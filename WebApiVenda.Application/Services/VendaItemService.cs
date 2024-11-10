@@ -30,15 +30,16 @@ namespace WebApiVenda.Application.Services
 
             var produto = await _produtoRepository.GetByIdAsync(vendaItemDTO.IdProduto);
             vendaItemDTO.PrecoUnitario = produto != null ? produto.Preco : 0;
-
-            await _vendaItemRepository.CreateAsync(_mapper.Map<VendaItem>(vendaItemDTO));
+            VendaItem vendaItem = new VendaItem(vendaItemDTO.Id, vendaItemDTO.IdVenda, vendaItemDTO.IdProduto, vendaItemDTO.Quantidade, vendaItemDTO.IdFinalizadora, vendaItemDTO.PrecoUnitario);
+            await _vendaItemRepository.CreateAsync(vendaItem);
             await UpdateVenda(vendaItemDTO, false);
         }
 
         public async Task Cancel(VendaItemDTO vendaItemDTO)
         {
-            // volta estoque
-            await _vendaItemRepository.CancelAsync(_mapper.Map<VendaItem>(vendaItemDTO));
+            VendaItem vendaItem = new VendaItem(vendaItemDTO.Id, vendaItemDTO.IdVenda, vendaItemDTO.IdProduto, vendaItemDTO.Quantidade, vendaItemDTO.IdFinalizadora, vendaItemDTO.PrecoUnitario);
+
+            await _vendaItemRepository.CancelAsync(vendaItem);
             await UpdateVenda(vendaItemDTO, true);
         }
 
@@ -56,7 +57,9 @@ namespace WebApiVenda.Application.Services
 
         public async Task Update(VendaItemDTO vendaItemDTO)
         {
-            await _vendaItemRepository.UpdateAsync(_mapper.Map<VendaItem>(vendaItemDTO));
+            VendaItem vendaItem = new VendaItem(vendaItemDTO.Id, vendaItemDTO.IdVenda, vendaItemDTO.IdProduto, vendaItemDTO.Quantidade, vendaItemDTO.IdFinalizadora, vendaItemDTO.PrecoUnitario);
+
+            await _vendaItemRepository.UpdateAsync(vendaItem);
         }
 
         private async Task UpdateVenda(VendaItemDTO vendaItemDTO, bool cancelamentoItem)
@@ -69,7 +72,6 @@ namespace WebApiVenda.Application.Services
             else 
             {
                 venda.ValorVenda -= vendaItemDTO.Quantidade * vendaItemDTO.PrecoUnitario;
-
             }
             await _vendaRepository.UpdateAsync(venda);
         }

@@ -25,18 +25,29 @@ namespace WebApiVenda.Application.Services
             _produtoRepository = produtoRepository ?? throw new ArgumentNullException(nameof(produtoRepository));
             _vendaItemRepository = vendaItemRepository ?? throw new ArgumentNullException(nameof(vendaItemRepository));
         }
-        public Venda ReturnMappingDTOToEntity(VendaDTO vendaDTO)
-        {
-            return _mapper.Map<Venda>(vendaDTO);
-        }
+
+
         public async Task Add(VendaDTO vendaDTO)
         {
-            await _vendaRepository.CreateAsync(ReturnMappingDTOToEntity(vendaDTO));
+            var venda = new Venda(vendaDTO.Id,vendaDTO.IdCliente, vendaDTO.DataVenda, vendaDTO.ValorVenda,vendaDTO.Status);
+            await _vendaRepository.CreateAsync(venda);
         }
 
         public async Task Cancel(VendaDTO vendaDTO)
         {
-            await _vendaRepository.CancelAsync(ReturnMappingDTOToEntity(vendaDTO));
+            if (vendaDTO.Status == (int)EVendaStatus.Cancelada || vendaDTO.Status == (int)EVendaStatus.Aberta)
+            {
+                throw new InvalidOperationException("Não é possível cancelar uma venda que já está cancelada ou aberta.");
+            }
+            var produtos = await _produtoRepository.GetByVenda(vendaDTO.Id);
+            var items = await _vendaItemRepository.GetByVendaAsync(vendaDTO.Id);
+            foreach (var produto in produtos)
+            {
+                produto.Estoque += items.Where(x => x.IdProduto == produto.Id).Sum(x => x.Quantidade);
+                await _produtoRepository.UpdateAsync(produto);
+            }
+            var venda = new Venda(vendaDTO.Id, vendaDTO.IdCliente, vendaDTO.DataVenda, vendaDTO.ValorVenda, vendaDTO.Status);
+            await _vendaRepository.CancelAsync(venda);
         }
 
         public async Task<IEnumerable<VendaDTO>> GetAll()
@@ -53,12 +64,14 @@ namespace WebApiVenda.Application.Services
 
         public async Task Update(VendaDTO vendaDTO)
         {
-            await _vendaRepository.UpdateAsync(ReturnMappingDTOToEntity(vendaDTO));
+            var venda = new Venda(vendaDTO.Id, vendaDTO.IdCliente, vendaDTO.DataVenda, vendaDTO.ValorVenda, vendaDTO.Status);
+            await _vendaRepository.UpdateAsync(venda);
         }
         public async Task FinalizeSale(VendaDTO vendaDTO)
         {
             vendaDTO.Status = (int)EVendaStatus.Fechada;
-            await _vendaRepository.UpdateAsync(ReturnMappingDTOToEntity(vendaDTO));
+            var venda = new Venda(vendaDTO.Id, vendaDTO.IdCliente, vendaDTO.DataVenda, vendaDTO.ValorVenda, vendaDTO.Status);
+            await _vendaRepository.UpdateAsync(venda);
             var produtos = await _produtoRepository.GetByVenda(vendaDTO.Id);
             var items = await _vendaItemRepository.GetByVendaAsync(vendaDTO.Id);
             foreach (var produto in produtos)

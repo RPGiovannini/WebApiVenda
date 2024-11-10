@@ -9,9 +9,10 @@ namespace WebApiVenda.Domain.Entities
 {
     public sealed class Produto : Entity
     {
-        public Produto(string descricao, decimal preco, decimal estoque, DateTime dataCadastro)
+        public Produto(long id,string descricao, decimal preco, decimal estoque, DateTime dataCadastro)
         {
             ValidateDomain(descricao, preco, estoque, dataCadastro);
+            Id = id;
         }
         public Produto() 
         {
@@ -25,6 +26,7 @@ namespace WebApiVenda.Domain.Entities
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(descricao) || descricao.Length<3, "Descricao invalida");
             DomainExceptionValidation.When(preco < 0, "Preço invalido");
+            DomainExceptionValidation.When(estoque < 0, "Estoque invalido");
 
             Descricao = descricao;
             Preco = preco;

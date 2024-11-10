@@ -24,12 +24,14 @@ namespace WebApiVenda.Application.Services
 
         public async Task Add(UsuarioDTO usuarioDTO)
         {
-            await _usuarioRepository.CreateAsync(_mapper.Map<Usuario>(usuarioDTO));
+            var usuario = new Usuario(usuarioDTO.Id,usuarioDTO.Email, usuarioDTO.Nome, usuarioDTO.Senha);
+            await _usuarioRepository.CreateAsync(usuario);
         }
 
         public async Task Delete(UsuarioDTO usuarioDTO)
         {
-            await _usuarioRepository.DeleteAsync(_mapper.Map<Usuario>(usuarioDTO));
+            var usuario = new Usuario(usuarioDTO.Id, usuarioDTO.Email, usuarioDTO.Nome, usuarioDTO.Senha);
+            await _usuarioRepository.DeleteAsync(usuario);
         }
 
         public async Task<IEnumerable<UsuarioDTO>> GetAll()
@@ -46,7 +48,8 @@ namespace WebApiVenda.Application.Services
 
         public async Task Update(UsuarioDTO usuarioDTO)
         {
-            await _usuarioRepository.UpdateAsync(_mapper.Map<Usuario>(usuarioDTO));
+            var usuario = new Usuario(usuarioDTO.Id, usuarioDTO.Email, usuarioDTO.Nome, usuarioDTO.Senha);
+            await _usuarioRepository.UpdateAsync(usuario);
         }
 
     }

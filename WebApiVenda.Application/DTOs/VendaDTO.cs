@@ -22,6 +22,7 @@ namespace WebApiVenda.Application.DTOs
         public decimal ValorVenda { get; set; }
 
         public int Status { get; set; }
+        public bool Ativo { get; set; }
 
     }
 }

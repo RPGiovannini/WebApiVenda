@@ -9,10 +9,12 @@ namespace WebApiVenda.Domain.Entities
 {
     public class VendaItem : Entity
     {
-        public VendaItem(long idVenda, long idProduto, decimal quantidade, int idFinalizadora, decimal precoUnitario)
+        public VendaItem(long id,long idVenda, long idProduto, decimal quantidade, int idFinalizadora, decimal precoUnitario)
         {
             ValidateDomain(idVenda, idProduto, quantidade, idFinalizadora, precoUnitario);
+            Id = id;
         }
+        public VendaItem() { }
 
         public long IdVenda { get; private set; }
         public long IdProduto { get; private set; }
