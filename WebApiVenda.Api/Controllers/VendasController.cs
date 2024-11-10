@@ -61,5 +61,20 @@ namespace WebApiVenda.Api.Controllers
             await _vendaService.Update(vendaDTO);
             return Ok(vendaDTO);
         }
+        [HttpPut("{id} Finalizar")]
+        public async Task<ActionResult> FinalizeSale(long id, [FromBody] long idBody) 
+        {
+            if(id != idBody) 
+            {
+                return BadRequest();
+            }
+            var venda = await _vendaService.GetId(idBody);
+            if (venda == null)
+            {
+                return NotFound("Venda não encontrada.");
+            }
+            await _vendaService.FinalizeSale(venda);
+            return Ok(venda);
+        }
     }
 }

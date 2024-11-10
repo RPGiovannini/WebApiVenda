@@ -51,6 +51,7 @@ namespace WebApiVenda.Application.Services
         {
             await _vendaItemRepository.UpdateAsync(_mapper.Map<VendaItem>(vendaItemDTO));
         }
+
         private async Task UpdateVenda(VendaItemDTO vendaItemDTO, bool cancelamentoItem)
         {
             var venda = await _vendaRepository.GetIdAsync(vendaItemDTO.IdVenda);

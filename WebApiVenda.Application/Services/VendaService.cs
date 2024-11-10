@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WebApiVenda.Application.DTOs;
 using WebApiVenda.Application.Interfaces;
 using WebApiVenda.Domain.Entities;
+using WebApiVenda.Domain.Enums;
 using WebApiVenda.Domain.Interfaces;
 
 namespace WebApiVenda.Application.Services
@@ -50,6 +51,11 @@ namespace WebApiVenda.Application.Services
         public async Task Update(VendaDTO vendaDTO)
         {
           await _vendaRepository.UpdateAsync(ReturnMappingDTOToEntity(vendaDTO));
+        }
+        public async Task FinalizeSale(VendaDTO vendaDTO)
+        {
+            vendaDTO.Status = (int)EVendaStatus.Fechada;
+            await _vendaRepository.UpdateAsync(ReturnMappingDTOToEntity(vendaDTO));
         }
     }
 }

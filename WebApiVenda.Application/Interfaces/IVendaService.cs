@@ -14,5 +14,6 @@ namespace WebApiVenda.Application.Interfaces
         public Task Add(VendaDTO vendaDTO);
         public Task Update(VendaDTO vendaDTO);
         public Task Cancel(VendaDTO vendaDTO);
+        public Task FinalizeSale(VendaDTO vendaDTO);
     }
 }
